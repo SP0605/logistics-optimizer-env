@@ -1,0 +1,42 @@
+title: "Logistics Optimizer Env"
+description: "A Gymnasium-based RL environment for last-mile logistics optimization. The agent must manage vehicle capacity, delivery deadlines, and dynamic orders to maximize efficiency and on-time deliveries."
+version: "1.0.0"
+authors:
+  - "AI-Copilot"
+license: "MIT"
+repository: "https://github.com/user/repo" # Replace with your repo
+tags:
+  - "reinforcement-learning"
+  - "logistics"
+  - "optimization"
+  - "gymnasium"
+  - "openenv"
+
+tasks:
+  - name: "easy"
+    description: "Single package delivery with no constraints. Focus on finding the shortest path."
+    grader: "logistics_env.env.grader:compute_score"
+  - name: "medium"
+    description: "Multiple packages with a vehicle capacity constraint. Requires optimizing the delivery sequence."
+    grader: "logistics_env.env.grader:compute_score"
+  - name: "hard"
+    description: "Multiple packages with deadlines, priorities, and a dynamic order that appears mid-episode. A complex challenge of balancing multiple objectives."
+    grader: "logistics_env.env.grader:compute_score"
+
+# API specification for the environment server
+api:
+  - path: "/health"
+    method: "GET"
+    description: "Health check for the server."
+  - path: "/api/v1/reset"
+    method: "POST"
+    description: "Resets the environment."
+  - path: "/api/v1/step"
+    method: "POST"
+    description: "Takes a step in the environment."
+    body:
+      action_type: "int (0: pickup, 1: deliver, 2: wait)"
+      order_id: "int"
+  - path: "/api/v1/state"
+    method: "GET"
+    description: "Gets the full internal state of the environment."
