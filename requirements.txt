@@ -6,3 +6,4 @@ uvicorn[standard]
 python-dotenv
 huggingface-hub
 requests
+huggingface_hub

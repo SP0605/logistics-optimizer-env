@@ -8,3 +8,4 @@ logistics_env/env/__init__.py
 logistics_env/env/environment.py
 logistics_env/server/__init__.py
 logistics_env/server/app.py
+logistics_env/server/routes.py
