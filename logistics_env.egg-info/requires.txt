@@ -1,0 +1,16 @@
+gymnasium>=0.29.1
+numpy>=1.24.0
+pydantic>=2.0.0
+
+[all]
+logistics-env[server]
+logistics-env[inference]
+
+[inference]
+openai
+requests
+python-dotenv
+
+[server]
+fastapi
+uvicorn

@@ -1,0 +1,21 @@
+Metadata-Version: 2.4
+Name: logistics-env
+Version: 1.0.0
+Summary: A Gymnasium-based RL environment for last-mile logistics optimization
+Author: AI-Copilot
+License: MIT
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: gymnasium>=0.29.1
+Requires-Dist: numpy>=1.24.0
+Requires-Dist: pydantic>=2.0.0
+Provides-Extra: server
+Requires-Dist: fastapi; extra == "server"
+Requires-Dist: uvicorn; extra == "server"
+Provides-Extra: inference
+Requires-Dist: openai; extra == "inference"
+Requires-Dist: requests; extra == "inference"
+Requires-Dist: python-dotenv; extra == "inference"
+Provides-Extra: all
+Requires-Dist: logistics-env[server]; extra == "all"
+Requires-Dist: logistics-env[inference]; extra == "all"

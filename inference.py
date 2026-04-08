@@ -9,7 +9,7 @@ load_dotenv()
 
 # --- Configuration ---
 API_BASE_URL = os.getenv("API_BASE_URL", "http://127.0.0.1:8000")
-MODEL_NAME = os.getenv("MODEL_NAME", "gpt-3.5-turbo")
+MODEL_NAME = os.getenv("MODEL_NAME", "meta-llama/Meta-Llama-3-8B-Instruct")
 HF_TOKEN = os.getenv("HF_TOKEN") # This is often the same as OPENAI_API_KEY for compatible APIs
 
 # --- OpenAI Client Initialization ---
@@ -17,7 +17,7 @@ HF_TOKEN = os.getenv("HF_TOKEN") # This is often the same as OPENAI_API_KEY for 
 # For many Hugging Face models, you can use the OpenAI compatibility layer.
 client = OpenAI(
     api_key=HF_TOKEN,
-    base_url=os.getenv("OPENAI_API_BASE_URL") # Use a different variable if your HF endpoint is different
+    base_url="https://api-inference.huggingface.co/v1"
 )
 
 def get_action_from_llm(observation: dict) -> dict:
@@ -75,6 +75,7 @@ def run_inference():
     step_count = 0
 
     while not terminated and not truncated:
+        print("Loop running...")
         # 2. Get action from the agent (LLM)
         action = get_action_from_llm(obs)
         
@@ -119,3 +120,4 @@ def run_inference():
 
 if __name__ == "__main__":
     run_inference()
+print("HF TOKEN:", HF_TOKEN)
