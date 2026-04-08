@@ -24,7 +24,7 @@ server = [
     "uvicorn",
 ]
 inference = [
-    "openai",
+    "huggingface-hub",
     "requests",
     "python-dotenv",
 ]

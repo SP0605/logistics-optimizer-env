@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from openai import OpenAI
+from huggingface_hub import InferenceClient
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -10,14 +10,12 @@ load_dotenv()
 # --- Configuration ---
 API_BASE_URL = os.getenv("API_BASE_URL", "http://127.0.0.1:8000")
 MODEL_NAME = os.getenv("MODEL_NAME", "meta-llama/Meta-Llama-3-8B-Instruct")
-HF_TOKEN = os.getenv("HF_TOKEN") # This is often the same as OPENAI_API_KEY for compatible APIs
+HF_TOKEN = os.getenv("HF_TOKEN")
 
-# --- OpenAI Client Initialization ---
-# Note: For local testing with a non-OpenAI model, you might need to adjust this.
-# For many Hugging Face models, you can use the OpenAI compatibility layer.
-client = OpenAI(
-    api_key=HF_TOKEN,
-    base_url="https://api-inference.huggingface.co/v1"
+# --- Hugging Face Client Initialization ---
+client = InferenceClient(
+    model=MODEL_NAME,
+    token=HF_TOKEN
 )
 
 def get_action_from_llm(observation: dict) -> dict:
@@ -41,8 +39,7 @@ def get_action_from_llm(observation: dict) -> dict:
     """
 
     try:
-        response = client.chat.completions.create(
-            model=MODEL_NAME,
+        response = client.chat_completion(
             messages=[{"role": "user", "content": prompt}],
             response_format={"type": "json_object"},
         )
