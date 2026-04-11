@@ -13,3 +13,9 @@ app.include_router(api_router, prefix="/api/v1")
 @app.get("/health", tags=["Health"])
 async def health_check():
     return {"status": "ok"}
+
+
+
+@app.get("/debug")
+def debug():
+    return [route.path for route in app.routes]
