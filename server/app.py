@@ -1,0 +1,1 @@
+from logistics_env.server.app import app
