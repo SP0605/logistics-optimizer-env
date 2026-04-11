@@ -1,11 +1,11 @@
-step_count = 0
-MAX_STEPS = 10
 from fastapi import APIRouter
 from logistics_env.env.environment import LogisticsEnv
 
 router = APIRouter()
 
-# Create global environment
+step_count = 0
+MAX_STEPS = 10
+
 env = LogisticsEnv(task_level="medium")
 
 
@@ -14,7 +14,8 @@ def health():
     return {"status": "ok"}
 
 
-@router.post("/api/v1/reset")
+# ✅ FIXED (REMOVE /api/v1)
+@router.post("/reset")
 def reset():
     global step_count
     step_count = 0
@@ -22,31 +23,32 @@ def reset():
     obs, info = env.reset()
 
     return {
-        "observation": str(obs),
-        "info": str(info)
+        "observation": obs,
+        "info": info
     }
 
 
-@router.post("/api/v1/step")
+# ✅ FIXED (REMOVE /api/v1)
+@router.post("/step")
 def step(action: dict):
     global step_count
     step_count += 1
 
     obs, reward, terminated, truncated, info = env.step(action)
 
-    # 🔥 FORCE STOP
     if step_count >= MAX_STEPS:
         truncated = True
 
     return {
-        "observation": str(obs),
+        "observation": obs,
         "reward": float(reward),
         "terminated": bool(terminated),
         "truncated": bool(truncated),
-        "info": str(info)
+        "info": info
     }
 
 
-@router.get("/api/v1/state")
+# ✅ FIXED (REMOVE /api/v1)
+@router.get("/state")
 def state():
     return env.state()
