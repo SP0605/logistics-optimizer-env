@@ -3,19 +3,13 @@ from logistics_env.env.environment import LogisticsEnv
 
 router = APIRouter()
 
+env = LogisticsEnv(task_level="medium")
+
 step_count = 0
 MAX_STEPS = 10
 
-env = LogisticsEnv(task_level="medium")
 
-
-@router.get("/health")
-def health():
-    return {"status": "ok"}
-
-
-# ✅ FIXED (REMOVE /api/v1)
-@router.post("/reset")
+@router.post("/reset")   # ✅ NO /api/v1
 def reset():
     global step_count
     step_count = 0
@@ -28,8 +22,7 @@ def reset():
     }
 
 
-# ✅ FIXED (REMOVE /api/v1)
-@router.post("/step")
+@router.post("/step")   # ✅ NO /api/v1
 def step(action: dict):
     global step_count
     step_count += 1
@@ -48,7 +41,6 @@ def step(action: dict):
     }
 
 
-# ✅ FIXED (REMOVE /api/v1)
 @router.get("/state")
 def state():
     return env.state()
